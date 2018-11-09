@@ -1,0 +1,12 @@
+
+.signUp-content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.filter-container{
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
