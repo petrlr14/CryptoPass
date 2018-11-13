@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {FormGroup, FormControl, Button,Alert} from 'react-bootstrap';
+import {FormGroup, FormControl, Button,Alert,Col,Row} from 'react-bootstrap';
 import logo from '../assets/images/CryptoPass.png';
 import utilities from '../utilities';
 
@@ -22,8 +22,11 @@ export class RegisterForm extends React.Component{
             is_validate:false,
             is_alert:false
         }
-        
+        this.handleClick = this.handleClick.bind(this);
     } 
+    handleClick(e){
+        this.props.onChange('signIn');
+    }
     handleChange = (e)=>{
         const target = e.target;
         const name = target.name;
@@ -188,7 +191,14 @@ export class RegisterForm extends React.Component{
                     <FormGroup>
                         <FormControl name="phone" type="phone" onChange={this.handleChange} placeholder="Phone number" value={phone}/>
                     </FormGroup>
-                    <Button type="submit">Submit</Button>
+                    <Row>
+                        <Col md={6}>
+                            <Button type="submit">Submit</Button>
+                        </Col>
+                        <Col md={6} style={{textAlign:"right"}}>
+                            <Button onClick={this.handleClick} className="btn btn-success">Sign In</Button>
+                        </Col>
+                    </Row>
                 </form>
             </div>
                 
