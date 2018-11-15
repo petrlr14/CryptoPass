@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {FormGroup, FormControl, Button,Alert} from 'react-bootstrap';
-import logo from '../assets/images/CryptoPass.png';
 import utilities from '../utilities';
+import {Logo} from './Logo.js'
 
 export class RegisterForm extends React.Component{
     constructor(props){
@@ -132,11 +132,7 @@ export class RegisterForm extends React.Component{
             textAlign:'center',
             color:'#fff'
         }
-        let logoContent={
-            width: '100%',
-            textAlign:'center',
-            margin:'10px 0px 20px 0px'
-        }
+        
         let success={
             color:"var(--success)",
             borderColor:"var(--success)"
@@ -147,9 +143,7 @@ export class RegisterForm extends React.Component{
         }
         return(
             <div className="form-content">
-                <figcaption style={logoContent}>
-                    <img src={logo} className="img-fluid" alt="CryptoPass"/>
-                </figcaption>
+                <Logo />
                 <h3 style={center }>Sign Up</h3>
                 {
                     (this.state.is_alert)?<Alert bsStyle="warning">
