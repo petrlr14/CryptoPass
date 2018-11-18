@@ -2,7 +2,9 @@ div.welcome-container{
     box-sizing: border-box;
     overflow: hidden;
 }
-
+video{
+    overflow: hidden;
+}
 .center-content{
     display: flex;
     flex-direction: column;
@@ -19,4 +21,19 @@ div.welcome-container{
 }
 p[name="validation-label"]{
     color:#fff;
+}
+i{
+    margin-left: 4px;
+}
+.fa-spinner{
+    animation: spinner 4s infinite normal;
+}
+@keyframes spinner{
+    from{
+        transform: rotate(0deg);
+        transform-origin: 50% 50%;
+    }to{
+        transform: rotate(360deg);
+        transform-origin: 50% 50%;
+    }
 }

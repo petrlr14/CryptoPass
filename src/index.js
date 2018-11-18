@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {SignUp} from './components/SignUp.js';
+import {App} from './app';
 import './assets/css/bootstrap.css';
 import './assets/css/style.css';
-
+ 
 ReactDOM.render(
-    <SignUp/>,
+    <App/>,
     document.getElementById("root")
 );
