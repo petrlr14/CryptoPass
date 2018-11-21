@@ -1,13 +1,13 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import {Panel} from './Panel';
+import {NavegationBar} from './NavegationBar'
+import {AddAccount} from './AddAccount';
 export class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state={
         }
-    }
-    handleClick = (e) =>{
-        window.sessionStorage.removeItem('accessToken');
     }
     render(){
         if(!window.sessionStorage.getItem("accessToken")){
@@ -15,8 +15,11 @@ export class Dashboard extends React.Component{
         }
         return (
             <div>
-                <h1>Iniciaste sesion con el token: {window.sessionStorage.accessToken}</h1>
-                <a href="/" onClick={this.handleClick}>Log Out</a>
+                <NavegationBar/>
+                <div className="container-fluid">
+                    <AddAccount/>
+                    <Panel />
+                </div>
             </div>
 
         );

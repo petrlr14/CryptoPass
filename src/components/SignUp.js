@@ -3,11 +3,14 @@ import {Row,Col} from 'react-bootstrap';
 import {RegisterForm} from './RegisterForm';
 import {SignInForm} from './SignInForm';
 import videoBanner from '../assets/images/bacground-video.mp4';
+import {Redirect} from 'react-router-dom';
+
 export class SignUp extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            status: 'signIn'
+            status: 'signIn',
+            redirect:false
         }
         this.changeStatus = this.changeStatus.bind(this);
     }
@@ -18,11 +21,21 @@ export class SignUp extends React.Component{
             status: status
         })
     }
+    componentDidMount(){
+        if(window.sessionStorage.getItem('accessToken')){
+            this.setState({
+                redirect:true
+            })
+        }
+    }
     render(){
         let videoContainer = {
             width:'100%',
             position:'absolute',
             overflow:'hidden'
+        }
+        if(this.state.redirect){
+            return <Redirect to='/Dashboard' />
         }
         return(
             <div className="welcome-container">

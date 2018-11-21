@@ -188,10 +188,10 @@ export class RegisterForm extends React.Component{
                     </FormGroup>
                     <Row>
                         <Col md={6}>
-                            <Button type="submit">Sing Up</Button>
+                            <Button onClick={this.handleClick} className="btn btn-success">Sign In</Button>
                         </Col>
                         <Col md={6} style={{textAlign:"right"}}>
-                            <Button onClick={this.handleClick} className="btn btn-success">Sign In</Button>
+                            <Button type="submit">Sing Up</Button>
                         </Col>
                     </Row>
                 </form>

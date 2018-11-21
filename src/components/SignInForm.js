@@ -42,6 +42,7 @@ export class SignInForm extends React.Component{
             axios.post(`${endPoint}/api/signIn`,body)
                 .then(res =>{
                     window.sessionStorage.setItem('accessToken',res.data.token);
+                    window.sessionStorage.setItem('nickname',body.nickname);
                     this.setState({
                         redirect:true
                     })
@@ -89,7 +90,7 @@ export class SignInForm extends React.Component{
             </Alert>
         );
         const spinner = (
-            <i class="fas fa-spinner"></i>
+            <i className="fas fa-spinner"></i>
         );
         return(
             <div className="form-content">
@@ -105,10 +106,10 @@ export class SignInForm extends React.Component{
                     </FormGroup>
                     <Row>
                         <Col md={6}>
-                            <Button type="submit" className="spinner-animation">Sign In {(this.state.show_spinner)?spinner:""}</Button>
+                            <Button onClick={this.handleClick} className="btn btn-danger">Sign Up </Button>
                         </Col>
                         <Col style={{textAlign:"right"}} md={6}>
-                            <Button onClick={this.handleClick} className="btn btn-danger">Sign Up </Button>
+                            <Button type="submit" className="spinner-animation">Sign In {(this.state.show_spinner)?spinner:""}</Button>
                         </Col>
                     </Row>
                 </form>

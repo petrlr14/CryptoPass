@@ -28,6 +28,39 @@ i{
 .fa-spinner{
     animation: spinner 4s infinite normal;
 }
+.accounts-container{
+    border: 1px solid #dfe6e9;
+    border-radius: 4px;
+    padding: 7px;
+}
+.container-fluid{
+    width: calc(100% - 30px);
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.user-account-info, .account-info{
+    margin-bottom: 15px;
+}
+.user-account-info h6, 
+.account-info h6,
+.user-account-info h5, 
+.account-info h5{
+    text-transform:none;
+    margin-top:-10px;
+    font-size: 0.8rem; 
+}
+.banner-account{
+    min-width: 100%;
+    max-height: 175px;
+}
+.modal-header{
+    display:flex;
+    justify-content: space-between;
+}
+button.close{
+    margin-left: -16 !important;
+    margin-left: 0px !important;
+}
 @keyframes spinner{
     from{
         transform: rotate(0deg);
