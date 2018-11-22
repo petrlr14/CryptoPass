@@ -106,10 +106,10 @@ export class SignInForm extends React.Component{
                     </FormGroup>
                     <Row>
                         <Col md={6}>
-                            <Button onClick={this.handleClick} className="btn btn-danger">Sign Up </Button>
+                            <Button onClick={this.handleClick} className="btn btn-danger">Sign up </Button>
                         </Col>
                         <Col style={{textAlign:"right"}} md={6}>
-                            <Button type="submit" className="spinner-animation">Sign In {(this.state.show_spinner)?spinner:""}</Button>
+                            <Button type="submit" className="spinner-animation">Sign in {(this.state.show_spinner)?spinner:""}</Button>
                         </Col>
                     </Row>
                 </form>
