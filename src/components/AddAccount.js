@@ -3,7 +3,6 @@ import {FormGroup,FormControl,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 import {endPoint} from '../utilities';
 import $ from 'jquery';
-import '../assets/js/passwordGenerator.js';
 export class AddAccount extends React.Component{
     constructor(props){
         super(props);
@@ -33,6 +32,10 @@ export class AddAccount extends React.Component{
         })
     }
     componentDidMount(){
+        const script = document.createElement('script');
+        script.src ='../assets/js/passwordGenerator.js';
+        script.async =true;
+        document.body.appendChild(script);
         axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
             headers:{
                 'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
@@ -45,12 +48,6 @@ export class AddAccount extends React.Component{
         })
         .catch(err =>{
             console.log(err);
-        })
-    }
-    setGenerateValue=(e)=>{
-        let passwordGenerated = document.getElementById('password').value;
-        this.setState({
-            password: this.state.password + passwordGenerated
         })
     }
     handleSubmit =(e)=>{
