@@ -1,4 +1,5 @@
 window.addEventListener('load', function () {
+    this.console.log('corriendo');
     var lengthSlider = document.getElementById("size");
     var sliderValue = document.getElementById("sizeValue");
     if(lengthSlider==null || sliderValue==null){
