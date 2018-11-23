@@ -2,6 +2,7 @@ import React from 'react';
 import {FormGroup,FormControl,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 import {endPoint} from '../utilities';
+import $ from 'jquery';
 export class AddAccount extends React.Component{
     constructor(props){
         super(props);
@@ -14,6 +15,7 @@ export class AddAccount extends React.Component{
             description:'',
             is_alert:false
         }
+        this.demmissModal = this.demmissModal.bind(this)
     }
     handleChange =(e)=>{
         const target = e.target;
@@ -23,6 +25,11 @@ export class AddAccount extends React.Component{
             [name]:value,
         });
         
+    }
+    demmissModal(){
+        $(window).ready(()=>{
+            $('#myModal').modal('hide');
+        })
     }
     componentDidMount(){
         axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
@@ -45,7 +52,7 @@ export class AddAccount extends React.Component{
             const body ={
                 _id:this.state.idUser,
                 name:this.state.name,
-                wallpaper:`https://source.unsplash.com/random/318x175`,
+                wallpaper:`https://picsum.photos/318/175?blur`,
                 description:this.state.description,
                 url:this.state.url,
                 login:this.state.login,
@@ -59,6 +66,14 @@ export class AddAccount extends React.Component{
             .then(response=>{
                 if(response.status === 200){
                     this.props.onChange(true);
+                    this.setState({
+                        name:'',
+                        url:'',
+                        login:'',
+                        password:'',
+                        description:'',
+                    })
+                    this.demmissModal();
                 }
             })
             .catch(err =>{

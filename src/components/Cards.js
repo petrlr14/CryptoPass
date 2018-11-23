@@ -74,7 +74,7 @@ export class Card extends React.Component{
     }
     render(){
         return(
-            <div className="card bg-secondary mb-4" style={{maxWidth:'20rem',margin:'7px'}}>
+            <div className="card bg-secondary col-md-4" style={{maxWidth:'20rem',margin:'7px',padding:'0px'}}>
                 <img className="banner-account" src={this.state.banner} alt={this.state.title} />
                 <i style={{cursor:'pointer'}} onClick={this.deleteAccount} className="fas fa-eraser"></i>
                 <div className="card-body">
