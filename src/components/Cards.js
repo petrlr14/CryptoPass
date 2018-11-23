@@ -7,6 +7,8 @@ export class Card extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            idUser:'',
+            _id:'',
             banner:'',
             title:'',
             url:'',
@@ -14,6 +16,25 @@ export class Card extends React.Component{
             password:'',
             description:'',
         }
+    }
+    deleteAccount=(e)=>{
+        axios.delete(`${endPoint}/api/deleteAccount/${this.state._id}`,{
+            headers:{
+                'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
+            },
+            data:{
+                'idUser':this.state.idUser
+            }
+            
+        })
+        .then(res =>{
+            if(res.status === 200){
+                this.props.onChange();
+            }
+        })
+        .catch(err =>{
+
+        })
     }
     componentDidMount(){
         axios.get(`${endPoint}/api/getAccount/${this.props.idAccount}`,{
@@ -23,6 +44,7 @@ export class Card extends React.Component{
         })
         .then(res =>{
             this.setState({
+                _id:res.data.acnt._id,
                 banner: res.data.acnt.wallpaper,
                 url:res.data.acnt.url,
                 title: res.data.acnt.name,
@@ -35,11 +57,26 @@ export class Card extends React.Component{
             console.log(`Error: ${err}`);
         })
 
+        axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
+            headers:{
+                'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res =>{
+            this.setState({
+                idUser:res.data.user._id
+            });
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
     }
     render(){
         return(
             <div className="card bg-secondary mb-4" style={{maxWidth:'20rem',margin:'7px'}}>
                 <img className="banner-account" src={this.state.banner} alt={this.state.title} />
+                <i style={{cursor:'pointer'}} onClick={this.deleteAccount} className="fas fa-eraser"></i>
                 <div className="card-body">
                     <div className="account-info">
                         <h4 className="card-title">{this.state.title}</h4>

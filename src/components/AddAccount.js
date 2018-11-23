@@ -1,17 +1,18 @@
 import React from 'react';
-import {FormGroup,FormControl,Button} from 'react-bootstrap'
+import {FormGroup,FormControl,Button,Alert} from 'react-bootstrap';
+import axios from 'axios';
+import {endPoint} from '../utilities';
 export class AddAccount extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            idUser:'',
+            name:'',
             url:'',
-            banner:'',
             login:'',
             password:'',
             description:'',
-            is_url:false,
-            is_login:false,
-            is_password:false
+            is_alert:false
         }
     }
     handleChange =(e)=>{
@@ -22,21 +23,61 @@ export class AddAccount extends React.Component{
             [name]:value,
         });
         
-        (this.state.url.length >= 1) ? this.setState({is_url:true}) : this.setState({is_url:false})
-        //(this.state.login.length > 0)?this.setState({is_login:true}):this.setState({is_login:false})
-        //(this.state.password.length > 0)?this.setState({is_password:true}):this.setState({is_password:false})
+    }
+    componentDidMount(){
+        axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
+            headers:{
+                'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res =>{
+            this.setState({
+                idUser:res.data.user._id
+            });
+        })
+        .catch(err =>{
+            console.log(err);
+        })
     }
     handleSubmit =(e)=>{
+        e.preventDefault();
+        if(this.state.url !=='' && this.state.login !=='' && this.state.password){
+            const body ={
+                _id:this.state.idUser,
+                name:this.state.name,
+                wallpaper:`https://source.unsplash.com/random/318x175`,
+                description:this.state.description,
+                url:this.state.url,
+                login:this.state.login,
+                password:this.state.password
+            }
+            axios.post(`${endPoint}/api/newAccount`,body,{
+                headers:{
+                    'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
+                }
+            })
+            .then(response=>{
+                if(response.status === 200){
+                    this.props.onChange(true);
+                }
+            })
+            .catch(err =>{
+            })
+        }else{
+            this.setState({
+                is_alert:true
+            })
+        }
         
     }
     render(){
-        const {url,banner,login,password,description,is_login,is_password,is_url} = this.state;
-        let success ={
-            border: '1px solid var(--success)'
-        }
-        let error ={
-            border: '1px solid var(--danger)'
-        }
+        const {url,name,login,password,description} = this.state;
+        const alert=(
+            <Alert bsStyle="warning">
+                Ups, some fields are empty
+            </Alert>
+        );
+
         return(
             <div style={{marginBottom:'10px'}}>
                 <Button type="button" bsStyle='success' data-toggle="modal" data-target="#myModal">
@@ -51,12 +92,13 @@ export class AddAccount extends React.Component{
                         <h4 className="modal-title" id="myModalLabel">Add new account</h4>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={this.handleChange}>
+                        {(this.state.is_alert)?alert:""}
+                        <form onSubmit={this.handleSubmit}>
                             <FormGroup>
-                                <FormControl style={(is_url)?success:error} onChange={this.handleChange} name="url" type="text" placeholder="URL" value={url} />
+                                <FormControl  onChange={this.handleChange} name="url" type="url" placeholder="URL" value={url} />
                             </FormGroup>
                             <FormGroup>
-                                <FormControl onChange={this.handleChange} name="banner" type="file" value={banner}/>
+                                <FormControl onChange={this.handleChange} name="name" type="text" placeholder="Account name" value={name} />
                             </FormGroup>
                             <FormGroup controlId="credentials">
                                 <label className="muted-text">Credentials</label>
@@ -70,12 +112,12 @@ export class AddAccount extends React.Component{
                             <hr/>
                             <FormGroup>
                                 <FormControl onChange={this.handleChange} name="description" componentClass="textarea" placeholder="Description" value={description}/>
-                            </FormGroup>
+                            </FormGroup>                       
+                            <div className="modal-footer">
+                                <Button type="button" bsStyle="danger" data-dismiss="modal">Close</Button>
+                                <Button type="submit" bsStyle="success">Save account</Button>
+                            </div>
                         </form>
-                    </div>
-                    <div className="modal-footer">
-                        <Button type="button" bsStyle="danger" data-dismiss="modal">Close</Button>
-                        <Button type="submit" bsStyle="success">Save account</Button>
                     </div>
                     </div>
                 </div>

@@ -7,10 +7,32 @@ export class Panel extends React.Component{
         super(props);
         this.state={
             accounts:[],
-            privateKey:''
+            privateKey:'',
+            delete_update:false,
         }
+        this.handleDeleteUpate = this.handleDeleteUpate.bind(this);
     }
-    componentDidMount(){
+
+    componentDidUpdate(){
+        if(this.props.updateComponent){
+            this.props.onChange(false);
+            this.getAccounts();   
+        }
+        /*if(this.state.delete_update){
+            this.setState({
+                delete_update:false
+            })
+            this.getAccounts();
+        }*/
+    }
+    handleDeleteUpate(){
+        this.getAccounts();
+    }
+    componentWillMount(){
+        this.getAccounts();
+    }
+
+    getAccounts=(e)=>{
         axios.get(`${endPoint}/api/getMyAccounts/${window.sessionStorage.getItem('nickname')}`,{
             headers:{
                 'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
@@ -39,11 +61,11 @@ export class Panel extends React.Component{
           })
     }
     render(){
+        
         const listIds = this.state.accounts.map(account =>{
-            return <Card key={account.id_account} privateKey={this.state.privateKey} idAccount ={account.id_account}/>
-        });
-        
-        
+            return <Card onChange={this.handleDeleteUpate} key={account.id_account} privateKey={this.state.privateKey} idAccount ={account.id_account}/>
+        }); 
+       
         return(
             <div className="row accounts-container">
                 {listIds}
