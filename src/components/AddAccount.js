@@ -33,7 +33,7 @@ export class AddAccount extends React.Component{
     }
     componentDidMount(){
         const script = document.createElement('script');
-        script.src ='../assets/js/passwordGenerator.js';
+        script.src ='passwordGenerator.js';
         script.async =true;
         document.body.appendChild(script);
         axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
