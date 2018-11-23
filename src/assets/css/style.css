@@ -31,7 +31,6 @@ i{
 .accounts-container{
     border: 1px solid #dfe6e9;
     border-radius: 4px;
-    padding: 7px;
 }
 .container-fluid{
     width: calc(100% - 30px);
@@ -60,6 +59,20 @@ i{
 button.close{
     margin-left: -16 !important;
     margin-left: 0px !important;
+}
+#genPass{
+    display: flex;
+    justify-content: space-between;
+}
+#genPass input{
+    margin-right: 7px; 
+}
+.options{
+    text-align: center;
+}
+.options *{
+    margin-left: 4px;
+    margin-right: 4px;
 }
 @keyframes spinner{
     from{

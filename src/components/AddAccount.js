@@ -3,6 +3,7 @@ import {FormGroup,FormControl,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 import {endPoint} from '../utilities';
 import $ from 'jquery';
+import '../assets/js/passwordGenerator.js';
 export class AddAccount extends React.Component{
     constructor(props){
         super(props);
@@ -44,6 +45,12 @@ export class AddAccount extends React.Component{
         })
         .catch(err =>{
             console.log(err);
+        })
+    }
+    setGenerateValue=(e)=>{
+        let passwordGenerated = document.getElementById('password').value;
+        this.setState({
+            password: this.state.password + passwordGenerated
         })
     }
     handleSubmit =(e)=>{
@@ -92,6 +99,11 @@ export class AddAccount extends React.Component{
                 Ups, some fields are empty
             </Alert>
         );
+        const slider ={
+            width:'80%',
+            marginLeft:'auto',
+            marginRight:'auto'
+        }
 
         return(
             <div style={{marginBottom:'10px'}}>
@@ -121,8 +133,25 @@ export class AddAccount extends React.Component{
                                     <FormControl onChange={this.handleChange} name="login" type="text" placeholder="Login" value={login}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <FormControl onChange={this.handleChange} name="password" type="password" placeholder="Password" value={password}/>
+                                    <FormGroup id="genPass">
+                                        <FormControl id="password" onChange={this.handleChange} name="password" type="text" placeholder="Password" value={password}/>
+                                        <span><Button bsStyle='info' id="copyButton"><i className="fa fa-copy"></i></Button></span>
+                                    </FormGroup>
+                                    <FormGroup className="sliderContainer">
+                                        <FormControl style={slider} type="range" min="1" max="99" defaultValue="8" className="slider" id="size" />
+                                        <label htmlFor="size"> Length: </label><span id="sizeValue"></span>
+                                    </FormGroup>
+                                    <FormGroup className="options">
+                                        <label htmlFor="upper"><FormControl type="checkbox"  id="upper" className="upper" />Uppercase</label>
+                                        <label htmlFor="lower"><FormControl type="checkbox" id="lower" className="lower" />Lowercase</label>
+                                        <label htmlFor="nums"><FormControl type="checkbox"  id="nums" className="nums" />Numbers</label>
+                                        <label htmlFor="symbol"><FormControl type="checkbox"  id="symbols" className="symbols" />Symbols</label>
+                                    </FormGroup>
+                                    <FormGroup style={{textAlign:'center'}}>
+                                        <Button bsStyle='warning' type="button" id="generateBtn">Generar contraseña</Button>
+                                    </FormGroup>
                                 </FormGroup>
+                                
                             </FormGroup>
                             <hr/>
                             <FormGroup>
@@ -130,7 +159,7 @@ export class AddAccount extends React.Component{
                             </FormGroup>                       
                             <div className="modal-footer">
                                 <Button type="button" bsStyle="danger" data-dismiss="modal">Close</Button>
-                                <Button type="submit" bsStyle="success">Save account</Button>
+                                <Button type="submit" onClick={this.setGenerateValue} bsStyle="success">Save account</Button>
                             </div>
                         </form>
                     </div>
