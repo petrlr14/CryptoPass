@@ -3,6 +3,7 @@ import {FormGroup,FormControl,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 import {endPoint} from '../utilities';
 import $ from 'jquery';
+import '../assets/js/passwordGenerator.js';
 export class AddAccount extends React.Component{
     constructor(props){
         super(props);
@@ -32,7 +33,6 @@ export class AddAccount extends React.Component{
         })
     }
     componentDidMount(){
-        import '../assets/js/passwordGenerator.js';
         axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
             headers:{
                 'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`

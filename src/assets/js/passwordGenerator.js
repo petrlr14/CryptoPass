@@ -1,6 +1,9 @@
 window.addEventListener('load', function () {
     var lengthSlider = document.getElementById("size");
     var sliderValue = document.getElementById("sizeValue");
+    if(lengthSlider==null || sliderValue==null){
+        return;
+    }
     sliderValue.innerHTML = lengthSlider.value;
 
     var lowerCaseList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "ñ", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
