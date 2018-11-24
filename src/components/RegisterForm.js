@@ -87,7 +87,7 @@ export class RegisterForm extends React.Component{
         const body={
             name : this.state.name,
             lastName : this.state.lastName,
-            nickname : this.state.nickname,
+            nickname : this.state.nickname.trim(),
             email: this.state.email,
             password: this.state.password,
             phone: this.state.phone
@@ -191,7 +191,7 @@ export class RegisterForm extends React.Component{
                             <Button onClick={this.handleClick} className="btn btn-success">Sign In</Button>
                         </Col>
                         <Col md={6} style={{textAlign:"right"}}>
-                            <Button type="submit">Sing Up</Button>
+                            <Button type="submit">Sign Up</Button>
                         </Col>
                     </Row>
                 </form>
