@@ -3,6 +3,7 @@ import {FormGroup,FormControl,Button,Alert} from 'react-bootstrap';
 import axios from 'axios';
 import {endPoint} from '../utilities';
 import $ from 'jquery';
+import {PasswordGeneratorForm} from './PasswordGeneratorForm';
 export class AddAccount extends React.Component{
     constructor(props){
         super(props);
@@ -16,6 +17,7 @@ export class AddAccount extends React.Component{
             is_alert:false
         }
         this.demmissModal = this.demmissModal.bind(this)
+        this.setPassword = this.setPassword.bind(this)
     }
     handleChange =(e)=>{
         const target = e.target;
@@ -32,11 +34,6 @@ export class AddAccount extends React.Component{
         })
     }
     componentDidMount(){
-        const script = document.createElement('script');
-        script.src ='passwordGenerator.js';
-        script.async =true;
-        console.log(script);
-        document.body.appendChild(script);
         axios.get(`${endPoint}/api/myUser/${window.sessionStorage.getItem('nickname')}`,{
             headers:{
                 'Authorization':`Bearer ${window.sessionStorage.getItem('accessToken')}`
@@ -51,8 +48,14 @@ export class AddAccount extends React.Component{
             console.log(err);
         })
     }
+    setPassword(passwordGenerated){
+        this.setState({
+            password:passwordGenerated
+        })
+    }
     handleSubmit =(e)=>{
         e.preventDefault();
+        console.log(this.state.password)
         if(this.state.url !=='' && this.state.login !=='' && this.state.password){
             const body ={
                 _id:this.state.idUser,
@@ -91,17 +94,12 @@ export class AddAccount extends React.Component{
         
     }
     render(){
-        const {url,name,login,password,description} = this.state;
+        const {url,name,login,description} = this.state;
         const alert=(
             <Alert bsStyle="warning">
                 Ups, some fields are empty
             </Alert>
         );
-        const slider ={
-            width:'80%',
-            marginLeft:'auto',
-            marginRight:'auto'
-        }
 
         return(
             <div style={{marginBottom:'10px'}}>
@@ -131,25 +129,8 @@ export class AddAccount extends React.Component{
                                     <FormControl onChange={this.handleChange} name="login" type="text" placeholder="Login" value={login}/>
                                 </FormGroup>
                                 <FormGroup>
-                                    <FormGroup id="genPass">
-                                        <FormControl id="password" onChange={this.handleChange} name="password" type="text" placeholder="Password" value={password}/>
-                                        <span><Button bsStyle='info' id="copyButton"><i className="fa fa-copy"></i></Button></span>
-                                    </FormGroup>
-                                    <FormGroup className="sliderContainer">
-                                        <FormControl style={slider} type="range" min="1" max="99" defaultValue="8" className="slider" id="size" />
-                                        <label htmlFor="size"> Length: </label><span id="sizeValue"></span>
-                                    </FormGroup>
-                                    <FormGroup className="options">
-                                        <label htmlFor="upper"><FormControl type="checkbox"  id="upper" className="upper" />Uppercase</label>
-                                        <label htmlFor="lower"><FormControl type="checkbox" id="lower" className="lower" />Lowercase</label>
-                                        <label htmlFor="nums"><FormControl type="checkbox"  id="nums" className="nums" />Numbers</label>
-                                        <label htmlFor="symbol"><FormControl type="checkbox"  id="symbols" className="symbols" />Symbols</label>
-                                    </FormGroup>
-                                    <FormGroup style={{textAlign:'center'}}>
-                                        <Button bsStyle='warning' type="button" id="generateBtn">Generar contraseña</Button>
-                                    </FormGroup>
-                                </FormGroup>
-                                
+                                    <PasswordGeneratorForm onChange={this.setPassword}/>
+                                </FormGroup>     
                             </FormGroup>
                             <hr/>
                             <FormGroup>

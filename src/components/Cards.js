@@ -36,6 +36,7 @@ export class Card extends React.Component{
 
         })
     }
+
     componentDidMount(){
         axios.get(`${endPoint}/api/getAccount/${this.props.idAccount}`,{
             headers:{
@@ -73,6 +74,7 @@ export class Card extends React.Component{
 
     }
     render(){
+
         return(
             <div className="card bg-secondary col-md-4" style={{maxWidth:'20rem',margin:'7px',padding:'0px'}}>
                 <img className="banner-account" src={this.state.banner} alt={this.state.title} />
@@ -88,7 +90,7 @@ export class Card extends React.Component{
                         <h5 className="text-muted" style={{fontWeight:'bold'}}>{AES.decrypt(this.state.login,this.props.privateKey).toString(CryptoJS.enc.Utf8)}</h5>
                         <hr/>
                         <h6>Password:</h6>
-                        <h6 className="text-muted">{AES.decrypt(this.state.password,this.props.privateKey).toString(CryptoJS.enc.Utf8)}</h6>
+                        <h6 name='accountPassword'className="text-muted">{AES.decrypt(this.state.password,this.props.privateKey).toString(CryptoJS.enc.Utf8)}</h6>
                     </div>
                     <p className="card-text">{this.state.description}</p>
                 </div>
